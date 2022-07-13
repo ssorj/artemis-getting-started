@@ -26,7 +26,7 @@ jobs:
     container: fedora:latest
     steps:
       - uses: actions/checkout@v3
-      - run: dnf -y install curl gcc nc openssl-devel pip python /bin/ps sudo tar java-17-openjdk-headless
+      - run: dnf -y install curl cyrus-sasl-devel gcc nc openssl-devel pip python-devel /bin/ps sudo tar java-17-openjdk-headless
       - run: ./plano test
   macos:
     runs-on: macos-latest
@@ -46,5 +46,5 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: apt-get -qq update
-      - run: apt-get -qq install curl gcc libssl-dev netcat pip python3 sudo openjdk-17-jre-headless
+      - run: apt-get -qq install curl gcc libsasl2-dev libssl-dev netcat pip python3-dev sudo openjdk-17-jre-headless
       - run: ./plano test
