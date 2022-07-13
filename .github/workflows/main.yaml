@@ -27,6 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: dnf -y install curl cyrus-sasl-devel gcc nc openssl-devel pip python-devel /bin/ps sudo tar java-17-openjdk-headless
+      - run: echo "$HOME/.local/bin" >> $GITHUB_PATH
       - run: ./plano test
   macos:
     runs-on: macos-latest
@@ -39,6 +40,7 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.x"
+      - run: echo "$HOME/.local/bin" >> $GITHUB_PATH
       - run: ./plano test
   ubuntu:
     runs-on: ubuntu-latest
@@ -47,4 +49,5 @@ jobs:
       - uses: actions/checkout@v3
       - run: apt-get -qq update
       - run: apt-get -qq install curl gcc libsasl2-dev libssl-dev netcat pip python3-dev sudo openjdk-17-jre-headless
+      - run: echo "$HOME/.local/bin" >> $GITHUB_PATH
       - run: ./plano test
