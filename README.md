@@ -3,7 +3,7 @@
 ## Step 1: Install the broker
 
 ~~~ shell
-curl -f curl -f https://raw.githubusercontent.com/ssorj/artemis-install-script/main/install.sh | sh
+curl -f https://raw.githubusercontent.com/ssorj/artemis-install-script/main/install.sh | sh
 ~~~
 
 ## Step 2: Install the AMQP command-line tools
