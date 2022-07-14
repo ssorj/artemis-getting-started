@@ -11,7 +11,7 @@ jobs:
       run:
         shell: C:\tools\cygwin\bin\bash.exe --login -o igncr '{0}'
     steps:
-      - run: git config --global core.autocrlf input
+      # - run: git config --global core.autocrlf input
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
