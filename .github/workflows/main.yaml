@@ -5,29 +5,31 @@ on:
   schedule:
     - cron: "0 0 * * 0"
 jobs:
-  # cygwin:
-  #   runs-on: windows-latest
-  #   steps:
-  #     - run: git config --global core.autocrlf input
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-java@v3
-  #       with:
-  #         distribution: "temurin"
-  #         java-version: "17"
-  #     - uses: actions/setup-python@v4
-  #       with:
-  #         python-version: "3.x"
-  #     - uses: cygwin/cygwin-install-action@master
-  #       with:
-  #         packages: nc
-  #     - run: python plano big-test --verbose
+  cygwin:
+    runs-on: windows-latest
+    steps:
+      - run: git config --global core.autocrlf input
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+      - uses: cygwin/cygwin-install-action@master
+        with:
+          packages: nc
+      - run: echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+      - run: ./plano test
   fedora:
     runs-on: ubuntu-latest
     container: fedora:latest
     steps:
       - uses: actions/checkout@v3
-      - run: dnf -y install curl cyrus-sasl-devel gcc nc openssl-devel pip python-devel /bin/ps sudo tar java-17-openjdk-headless
-      - run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - run: dnf -y install curl nc /bin/ps sudo tar java-17-openjdk-headless # Artemis install deps
+      - run: dnf -y install cyrus-sasl-devel gcc openssl-devel pip python-devel # Qtools install deps
+      - run: echo "$HOME/.local/bin" >> "$GITHUB_PATH"
       - run: ./plano test
   macos:
     runs-on: macos-latest
@@ -40,7 +42,7 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.x"
-      - run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - run: echo "$HOME/.local/bin" >> "$GITHUB_PATH"
       - run: ./plano test
   ubuntu:
     runs-on: ubuntu-latest
@@ -48,6 +50,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: apt-get -qq update
-      - run: apt-get -qq install curl gcc libsasl2-dev libssl-dev netcat pip python3-dev sudo openjdk-17-jre-headless
-      - run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - run: apt-get -qq install curl netcat sudo openjdk-17-jre-headless # Artemis install deps
+      - run: apt-get -qq install gcc libsasl2-dev libssl-dev pip python3-dev # Qtools install deps
+      - run: echo "$HOME/.local/bin" >> "$GITHUB_PATH"
       - run: ./plano test
