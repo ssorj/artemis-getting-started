@@ -22,6 +22,9 @@ jobs:
       - uses: cygwin/cygwin-install-action@master
         with:
           packages: nc
+      - run: echo "$PATH"
+      - run: command -v curl
+      - run: curl --version
       - run: echo "$HOME/.local/bin" >> "$GITHUB_PATH"
       - run: cd "$GITHUB_WORKSPACE" && python plano test
   fedora:
